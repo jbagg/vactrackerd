@@ -1,0 +1,5 @@
+*.o
+moc_*
+.cproject
+.project
+Makefile
