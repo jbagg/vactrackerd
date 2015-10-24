@@ -61,7 +61,7 @@ bool UserParser::parseObjects(QObject *ref, Client *client, QString type, QStrin
 			return 0;
 		}
 		if (i == user->withdrawals.size()) {
-			withdrawal = new Withdrawal(i);
+			withdrawal = new Withdrawal(user, i);
 			user->withdrawals.append(withdrawal);
 		}
 		if (i < user->withdrawals.size())

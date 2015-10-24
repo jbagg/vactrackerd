@@ -18,63 +18,34 @@
 	Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 ---------------------------------------------------------------------------------------------------
    Project name : Vacation Tracker daemon
-   File name    : server.h
-   Created      : 28 May 2015
+   File name    : emailnotify.h
+   Created      : 21 Oct 2015 - Back to the Future!
    Author(s)    : Jonathan Bagg
 ---------------------------------------------------------------------------------------------------
-   TCP Server for Vacation Tracker Clients to connect to.
+   Interface to libesmtp to send email notifications
 ---------------------------------------------------------------------------------------------------
 **************************************************************************************************/
-#ifndef SERVER_H_
-#define SERVER_H_
+#ifndef EMAILNOTIFY_H_
+#define EMAILNOTIFY_H_
 
 #include <QObject>
-#include <QTcpServer>
-#include <QMap>
-#include <QTimer>
-#include <QThread>
-#include "region.h"
-#include "user.h"
-#include "client.h"
-#include "userparser.h"
-#include "regionparser.h"
-#include "emailnotify.h"
 
-class Client;
-class User;
-class GeoRegion;
+class Withdrawal;
 
-class Server : public Parse
+class EmailNotify : public QObject
 {
 	Q_OBJECT
 
 public:
-	Server(qint32 port);
-	inline bool hasRegion(QString regionID) {return regions.contains(regionID);}
-	inline GeoRegion *getRegion(QString regionID) {return regions[regionID];}
-	inline bool hasUser(QString userID) {return users.contains(userID);}
-	inline User *getUser(QString userID) {return users[userID];}
-	inline QMap<QString, User*>::iterator firstUser(void) {return users.begin();}
-	inline QMap<QString, User*>::iterator endUser(void) {return users.end();}
-	EmailNotify emailNotifier;
+	EmailNotify();
+
+public slots:
+	void notify(Withdrawal *withdrawal);
 
 private:
-	void loadUsers(void);
-	void loadRegions(void);
-	bool parseObjects(QObject *ref, Client *client, QString type, QString id, QString tail);
-	bool parseAction(QObject *ref, Client *client, QString cmd, QString value, qint32 n);
-	QTcpServer server;
-	QTimer periodicWorkTimer;
-	QMap <QString, GeoRegion *> regions;
-	QMap <QString, User *> users;
-	UserParser userParser;
-	RegionParser regionParser;
-	QThread emailThread;
-
-private slots:
-	void link(void);
-	void periodicWork(void);
+	bool configOk;
+	QString server, reply;
 
 };
 
-#endif /* SERVER_H_ */
+#endif /* EMAILNOTIFY_H_ */

@@ -50,6 +50,11 @@ Server::Server(qint32 port)
 	connect(&server, SIGNAL(newConnection()), this, SLOT(link()));
 	connect(&periodicWorkTimer, SIGNAL(timeout()), this, SLOT(periodicWork()));
 
+
+	connect(&userParser.withdrawalParser, SIGNAL(notify(Withdrawal *)), &emailNotifier, SLOT(notify(Withdrawal *)), Qt::QueuedConnection);
+	emailNotifier.moveToThread(&emailThread);
+	emailThread.start();
+
 	periodicWorkTimer.start(1200000);	// 20 min
 }
 

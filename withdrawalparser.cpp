@@ -55,6 +55,8 @@ bool WithdrawalParser::parseAction(QObject *ref, Client *, QString cmd, QString 
 			withdrawal->state = WDRL_CANCEL_REQUEST;
 		else if (value == "cancelled")
 			withdrawal->state = WDRL_CANCELLED;
+
+		emit notify(withdrawal);
 	}
 
 	return found;

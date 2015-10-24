@@ -30,12 +30,17 @@
 
 #include "parse.h"
 
+class Withdrawal;
+
 class WithdrawalParser : public Parse
 {
 	Q_OBJECT
 
 public:
 	WithdrawalParser();
+
+signals:
+	void notify(Withdrawal *withdrawal);
 
 private:
 	bool parseAction(QObject *ref, Client *client, QString id, QString value, qint32 n);

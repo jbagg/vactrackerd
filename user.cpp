@@ -44,6 +44,7 @@ User::User(Server *srv, QString fName)
 	updateManagersFlag = 0;
 
 	connect(this, SIGNAL(replicate()), this, SLOT(updateManagerChain()), Qt::QueuedConnection);
+	connect(this, SIGNAL(notify(Withdrawal *)), &server->emailNotifier, SLOT(notify(Withdrawal *)), Qt::QueuedConnection);
 }
 
 void User::load(void)
@@ -95,7 +96,7 @@ void User::load(void)
 			deposit->load(&xml);
 		}
 		else if (xml.tokenType() == QXmlStreamReader::StartElement && xml.name() == "withdrawal") {
-			withdrawal = new Withdrawal(withdrawals.size());
+			withdrawal = new Withdrawal(this, withdrawals.size());
 			withdrawals.append(withdrawal);
 			withdrawal->load(&xml);
 		}
@@ -396,6 +397,7 @@ void User::checkForExpiredRequests(quint32 today)
 	for(i=0; i<withdrawals.size(); i++) {
 		if (withdrawals[i]->getState() == WDRL_REQUEST && withdrawals[i]->getStart() <= today) {
 			withdrawals[i]->setState(WDRL_REJECTED);
+			emit notify(withdrawals[i]);
 			update = 1;
 		}
 	}

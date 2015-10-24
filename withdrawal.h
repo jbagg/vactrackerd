@@ -33,6 +33,9 @@
 #include <QXmlStreamReader>
 #include <QXmlStreamWriter>
 #include "withdrawalparser.h"
+#include "user.h"
+
+class User;
 
 enum withdrawal_state {
 	WDRL_REQUEST,
@@ -49,13 +52,15 @@ class Withdrawal : public QObject
 friend WithdrawalParser;
 
 public:
-	Withdrawal(quint32 value);
+	Withdrawal(User *parent, quint32 value);
 	void load(QXmlStreamReader *xml);
 	void save(QXmlStreamWriter *xml);
 	void dump(QString *response);
+	inline User *getUser(void) {return user;}
 	inline void setState(withdrawal_state value) {state = value;}
 	inline withdrawal_state getState(void) {return state;}
 	inline quint32 getStart(void) {return start;}
+	inline quint32 getEnd(void) {return end;}
 
 private:
 	quint32 id;
@@ -63,6 +68,7 @@ private:
 	quint32	start, end, requestDate, approvedDate;
 	qreal length;
 	QString approvedBy;
+	User *user;
 };
 
 #endif /* WITHDRAWAL_H_ */

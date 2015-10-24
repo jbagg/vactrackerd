@@ -38,6 +38,7 @@ class UserParser : public Parse
 
 public:
 	UserParser();
+	WithdrawalParser withdrawalParser;
 
 private:
 	bool parseObjects(QObject *ref, Client *client, QString type, QString id, QString tail);
@@ -46,7 +47,6 @@ private:
 	void parseString(QObject *ref, QString id, QString value);
 	bool editable(QObject *);
 	DepositParser depositParser;
-	WithdrawalParser withdrawalParser;
 };
 
 

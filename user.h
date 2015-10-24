@@ -41,6 +41,7 @@
 
 class Client;
 class GeoRegion;
+class Withdrawal;
 
 enum user_type {
 	UT_NORMAL,
@@ -68,14 +69,18 @@ public:
 
 	inline QString getID(void) {return id;}
 	inline void setID(QString value) {id = value;}
+	inline QString getFirstName(void) {return firstName;}
+	inline QString getLastName(void) {return lastName;}
 	inline QString getPwdHash(void) {return pwdHash;}
 	inline void setPwdHash(QString value) {pwdHash = value;}
 	inline QString getReportsTo(void) {return reportsTo;}
+	inline QString getEmail(void) {return email;}
 	inline void setBoss(User *newBoss)
 	{
 		boss = newBoss;
 		boss->employees.append(this);
 	}
+	inline User *getBoss(void) {return boss;}
 	inline GeoRegion *getRegion(void) {return region;}
 	inline user_type getType(void) {return type;}
 	inline void setType(user_type value) {type = value;}
@@ -135,6 +140,7 @@ public:
 
 signals:
 	void replicate(void);
+	void notify(Withdrawal *withdrawal);
 
 private:
 	void dump(Client *client);

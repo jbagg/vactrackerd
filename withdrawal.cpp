@@ -29,9 +29,10 @@
 #include "withdrawal.h"
 #include "user.h"
 
-Withdrawal::Withdrawal(quint32 value)
+Withdrawal::Withdrawal(User *parent, quint32 value)
 {
 	id = value;
+	user = parent;
 	approvedDate = 0;
 }
 
