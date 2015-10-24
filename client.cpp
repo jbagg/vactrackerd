@@ -43,7 +43,7 @@ void Client::rx(void)
 {
 	qint32	i;
 
-	rx_stream+= socket->read(1024);
+	rx_stream+= socket->readAll();
 	QStringList rx_cmds = rx_stream.split(QRegExp("[\r\n]"));
 	for (i=0; i<rx_cmds.size()-1; i++)
 	{
