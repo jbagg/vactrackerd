@@ -37,7 +37,7 @@ int main(int argc, char *argv[])
 	QStringList args = app.arguments();
 
 	app.setApplicationName("Vacation Tracker");
-	app.setApplicationVersion("0.1");
+	app.setApplicationVersion("0.8rc1");
 
 	if (args.size() == 2 && args.at(1) == "--version")
 	{
@@ -46,7 +46,7 @@ int main(int argc, char *argv[])
 	}
 
 	QZeroConf zeroConf;
-	zeroConf.registerService("Vaction-Tracker-server", "_vactracker._tcp", "local", SRV_PORT);
+	zeroConf.startServicePublish("Vaction-Tracker-server", "_vactracker._tcp", "local", SRV_PORT);
 
 	Server server(SRV_PORT);
 

@@ -18,3 +18,10 @@ Vacation Tracker is used to tracking employee vacation days in small and medium 
 ###Language
 
 Vacation Tracker Daemon is written in C++ using the Qt tool kit.
+
+
+### Build Dependencies
+
+Qt5
+
+[QtZeroConf](https://github.com/jbagg/QtZeroConf)
