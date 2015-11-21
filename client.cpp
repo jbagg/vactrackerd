@@ -130,7 +130,7 @@ bool Client::logIn(QString cmd)
 		user->addClient(this);
 	}
 	else
-		socket->write("error=\n");
+		socket->write("error\n");
 
 	return ok;
 }
