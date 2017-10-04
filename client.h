@@ -53,7 +53,6 @@ public:
 private:
 	bool cmdAuthCheck(QString cmd);
 	bool logIn(QString cmd);
-	QString rx_stream;
 	Server *server;
 	GeoRegion *activeRegion;
 	User *user, *activeUser;

@@ -41,14 +41,14 @@ Client::Client(Server *parent, QTcpSocket *newConnection)
 
 void Client::rx(void)
 {
-	qint32	i;
-
-	rx_stream+= socket->readAll();
-	QStringList rx_cmds = rx_stream.split(QRegExp("[\r\n]"));
-	for (i=0; i<rx_cmds.size()-1; i++)
+	while (socket->canReadLine())
 	{
+		QString line = socket->readLine();
+		line.chop(1); // remove '\n'
+		if (!line.size())
+			continue;
 		if (auth) {
-			if (cmdAuthCheck(rx_cmds[i]))
+			if (cmdAuthCheck(line))
 				socket->write("ok\n");
 			else {
 				socket->write("error=" + errorMsg.toUtf8() + '\n');
@@ -56,14 +56,7 @@ void Client::rx(void)
 			}
 		}
 		else
-			auth = logIn(rx_cmds[i]);
-	}
-
-	if (rx_cmds.size() > 1)
-	{
-		rx_stream.clear();
-		if (rx_cmds.at(i).size())		// if string size != 0, there is a partial command leftover
-			rx_stream+= rx_cmds.at(i);
+			auth = logIn(line);
 	}
 }
 
