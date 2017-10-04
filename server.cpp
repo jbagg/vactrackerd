@@ -36,6 +36,11 @@ Server::Server(qint32 port)
 	if (!dir.exists())
 		dir.mkdir(dir.path());
 
+	// create dir for regions if it doesn't exist (on first run)
+	dir.setPath(QDir::current().path() + "/regions");
+	if (!dir.exists())
+		dir.mkdir(dir.path());
+
 	loadRegions();
 	loadUsers();
 
