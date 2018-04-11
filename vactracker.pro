@@ -5,6 +5,8 @@ HEADERS+= parse.h depositparser.h withdrawalparser.h userparser.h regionyearpars
 SOURCES= main.cpp server.cpp client.cpp region.cpp regionYear.cpp user.cpp deposit.cpp withdrawal.cpp emailnotify.cpp
 SOURCES+= parse.cpp depositparser.cpp withdrawalparser.cpp userparser.cpp regionyearparser.cpp regionparser.cpp
 LIBS+= -lesmtp
+
+DEFINES+= QZEROCONF_STATIC
  
 include($$PWD/qtzeroconf/qtzeroconf.pri)
 
